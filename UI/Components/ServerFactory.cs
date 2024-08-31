@@ -18,10 +18,10 @@ namespace LiveSplit.UI.Components
 
         public string UpdateName => ComponentName;
 
-        public string UpdateURL => "http://livesplit.org/update/";
+        public string UpdateURL => "";
 
         public Version Version => Version.Parse("1.7.2");
 
-        public string XMLURL => "http://livesplit.org/update/Components/update.LiveSplit.Websocket.xml";
+        public string XMLURL => "";
     }
 }

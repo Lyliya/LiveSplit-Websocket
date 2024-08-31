@@ -132,7 +132,15 @@ namespace LiveSplit.UI.Components
                             case "split":
                                 handler = new EventHandler((object o, EventArgs e) =>
                                 {
-                                    clientConnection.SendMessage(ev);
+                                    dynamic result = new System.Dynamic.ExpandoObject();
+                                    var currentsplitindex = State.CurrentSplitIndex;
+                                    var timingMethod = State.CurrentTimingMethod;
+                                    if (timingMethod == TimingMethod.GameTime && !State.IsGameTimeInitialized)
+                                        timingMethod = TimingMethod.RealTime;
+                                    var time = State.CurrentTime[timingMethod];
+                                    result.currentsplitindex = currentsplitindex;
+                                    result.currenttime = time.HasValue ? time.Value.TotalMilliseconds : 0;
+                                    clientConnection.SendMessage(ev, result);
                                 });
                                 State.OnSplit += handler;
                                 clientConnection.addDisconnectHandler(() => State.OnSplit -= handler);
